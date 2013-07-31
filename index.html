@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+@keyframes fade {
+0%{ color: rgba(0,0,0, 0);}
+
+50% { color: rgba(0,0,0, 0.7);}
+
+99%{ color: rgba(0,0,0, 0); }
+}
+@keyframes rotate {
+0%{
+box-shadow: 10.6em 0 0 rgba(30, 140, 209, 0.2) inset, 0 10.6em 0 rgba(30, 140, 209, 0.2) inset, -10.6em 0 0 rgba(30, 140, 209, 0.2) inset, 0 -10.6em 0 rgba(30, 140, 209, 0.2) inset;
+color: rgba(0,0,0, 0);
+}
+
+50% {
+box-shadow: 1em 0 0 rgba(255,0,0,0.5)inset, 0 1em 0 rgba(0,255,0,0.5) inset, -1em 0 0 rgba(0,0,255,0.5) inset, 0 -1em 0 rgba(255,255,0,0.5) inset;
+color: rgba(0,0,0, 0.7);
+}
+
+99%{
+box-shadow: 10.6em 0 0 rgba(30, 140, 209, 0.2) inset, 0 10.6em 0 rgba(30, 140, 209, 0.2) inset, -10.6em 0 0 rgba(30, 140, 209, 0.2) inset, 0 -10.6em 0 rgba(30, 140, 209, 0.2) inset;
+color: rgba(0,0,0, 0);
+}
+
+}
+@keyframes changeColor {
+
+0% { background-color: rgba(255,0,0,0.3);}
+13% {background-color: rgba(255,127,0,0.3);}
+26% {background-color: rgba(255,255,0.3);}
+39%{background-color: rgba(0,255,0,0.3);}
+57%{background-color: rgba(0,0,255,0.3);}
+70%{background-color: rgba(75,0,130,0.3);}
+83%{background-color: rgba(143,0,255,0.3);}
+99%{background-color: rgba(255,0,0,0.3);}
+
+}
+
+#display {
+border-radius: 50px 10px;
+text-align:center;
+margin: 16% 2%;
+padding: 2% 5%;
+font-size: 8em;
+font-weight:bold;
+float:left;
+box-shadow:0 0 50px #AEAEAE;
+color:#000000;
+width:auto;
+animation-name: changeColor;
+animation-duration: 5s;
+animation-iteration-count: infinite;
+animation-timing-function: ease-in;
+}
+.panel {
+background-color: rgba(235,235,235,0.5);
+width: auto;
+box-shadow: 0 0  10px #AEAEAE;
+height: auto;
+float: left;
+margin: 2% 0%;
+-webkit-transition: all 200ms ease-in-out;
+-moz-transition: all 200ms ease-in-out;
+-o-transition: all 200ms ease-in-out;
+-ms-transition: all 200ms ease-in-out;
+}
+.suffixcolon {
+float:left;
+}
+.rotate360 {
+transform: rotateX(360deg);
+}
+.rotate0{
+transform: rotateX(0deg);
+}
+
+.suffixcolon:after {
+content: ":";
+}
+
+#dc:after {
+content: "days";
+}
+
+.box:before, .box:after {
+box-shadow: 10.6em 0 0 rgba(30, 140, 209, 0.2) inset, 0 10.6em 0 rgba(30, 140, 209, 0.2) inset, -10.6em 0 0 rgba(30, 140, 209, 0.2) inset, 0 -10.6em 0 rgba(30, 140, 209, 0.2) inset;
+border-radius: 100%;
+width: 15em;
+height: 15em;
+float:left;
+padding:0;
+margin: 0;
+content: " ";
+transition: box-shadow 0.75s ease 0s;
+position: absolute;
+animation-name: rotate;
+animation-duration: 5s;
+animation-iteration-count: infinite;
+animation-timing-function: ease-in;
+}
+/*
+.box:hover:before, .box:hover:after {
+
+box-shadow: 1em 0 0 rgba(255,0,0,0.5)inset, 0 1em 0 rgba(0,255,0,0.5) inset, -1em 0 0 rgba(0,0,255,0.5) inset, 0 -1em 0 rgba(255,255,0,0.5) inset;
+}*/
+.box:after {
+transform: rotate(45deg);
+}
+#rot-container {
+float:left;
+overflow:hidden;
+width: 160px;
+padding: 5%;
+margin: -15% 0 0 35%;
+}
+
+.box #text {
+font-size: 2em;
+animation-name: fade;
+animation-duration: 5s;
+animation-iteration-count: infinite;
+animation-timing-function: ease-in;
+font-family: verdana;
+position: absolute;
+margin: 8% 0 0 3%;
+float: left;
+
+color: rgba(0,0,0,0);
+
+}
+
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+function change(s,txt) {
+
+txt = String(txt);
+if($(s).text() != txt) {
+$(s).toggleClass("rotate0 rotate360");
+setTimeout(function(){$(s).text(txt);},50)
+}
+
+}
+var then = new Date(2014,1,1);
+var oneDay = 1000*60*60*24;
+function displayTime() {
+var now = new Date();
+var diff = then - now;
+var days = Math.floor(diff/oneDay);
+var remaining = diff%oneDay;
+var hours = ("0" + Math.floor(remaining/3600000)).slice(-2);
+remaining %= 3600000;
+var minutes = ("0" + Math.floor(remaining/60000)).slice(-2);
+remaining %= 60000;
+var seconds = ("0" + Math.floor(remaining/1000)).slice(-2);
+$("title").html(days + " days " + hours + ":" + minutes + ":" + seconds);
+
+change("#days", days);
+change("#hours", hours);
+change("#mins",minutes);
+change("#sec", seconds);
+//$("#display, title").text(now.toDateString());
+}
+
+
+$(document).ready(
+function() {
+setInterval("displayTime()",1000);
+}
+);
+</script>
+</head>
+
+<body>
+<div id="display" style="text-align:center"><div id="dc" style="float:left;padding:0 25%"><span class="panel rotate0" id="days"></span>&nbsp;</div>
+<div style="float:left; padding:0 25%;"><span class="panel rotate0" id="hours"></span><span class="suffixcolon"></span><span class="panel rotate0" id="mins"></span><span class="suffixcolon"></span><span class="panel rotate0" id="sec"></span></div>
+</div>
+<div id="rot-container">
+<div class="box" id="top"><span id="text">Text 1234</span></div>
+
+</div>
+
+</body>
+
+</html>
