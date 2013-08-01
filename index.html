@@ -243,8 +243,8 @@ font-size: 2em;
 
 	</style>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script>
-	function change(s,txt) {
+	<script type="text/javascript">
+function change(s,txt) {
 	
 	txt = String(txt);
 	if($(s).text() != txt) {
@@ -255,6 +255,7 @@ font-size: 2em;
 	}
 	var then = new Date(2014,1,1);
 	var oneDay = 1000*60*60*24;
+    var isMSIE = /*@cc_on!@*/0;  
 	function displayTime() {
 		var now = new Date();
 		var diff = then - now;
@@ -265,21 +266,35 @@ font-size: 2em;
 		var minutes = ("0" + Math.floor(remaining/60000)).slice(-2);
 		remaining %= 60000;
 		var seconds = ("0" + Math.floor(remaining/1000)).slice(-2);
-		$("title").html(days + " days " + hours + ":" + minutes + ":" + seconds);
 		
-		change("#days", days);
-		change("#hours", hours);
-		change("#mins",minutes);
-		change("#sec", seconds);
-		//$("#display, title").text(now.toDateString());
+		
+		
+		
+		if(isMSIE)
+		 {
+			
+			document.getElementById("display").innerHTML = days + " days " + hours + ":" + minutes + ":" + seconds;
+			document.title = days + " days " + hours + ":" + minutes + ":" + seconds;
+		 }
+		 else {
+		 $("title").html(days + " days " + hours + ":" + minutes + ":" + seconds);
+			change("#days", days);
+			change("#hours", hours);
+			change("#mins",minutes);
+			change("#sec", seconds);
+		 }
 	}
 	
-	
+	if(!isMSIE) {
 	$(document).ready(
 	function() {
 	setInterval("displayTime()",1000);
 	}
 	);
+	}
+	else {
+		setInterval("displayTime()",1000);
+	}
 	</script>
 </head>
 
