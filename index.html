@@ -253,7 +253,10 @@ function change(s,txt) {
 	}
 	
 	}
-	var then = new Date(2014,2,1);
+	var inY = prompt("Enter the year of target date (Eg. 2014)");
+	var inM = prompt("Enter the month of target date (Eg. Enter  12 for December)"); 
+	var inD = prompt("Enter the day of target date (Eg. 26)"); 
+	var then = new Date(inY,inM,inD);
 	var oneDay = 1000*60*60*24;
     var isMSIE = /*@cc_on!@*/0;  
 	function displayTime() {
@@ -303,7 +306,7 @@ function change(s,txt) {
 <div style="float:left; padding:0 25%;"><span class="panel rotate0" id="hours"></span><span class="suffixcolon"></span><span class="panel rotate0" id="mins"></span><span class="suffixcolon"></span><span class="panel rotate0" id="sec"></span></div>
 </div>
 <div id="rot-container">
-<div class="box" id="top"><span id="text">GATE 2014</span></div>
+<div class="box" id="top"><span id="text"></span></div>
 
 </div>
 
